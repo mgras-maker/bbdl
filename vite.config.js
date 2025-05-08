@@ -1,8 +1,7 @@
 import { defineConfig } from 'vite'
 import react from '@vitejs/plugin-react'
 
-// https://vite.dev/config/
 export default defineConfig({
   plugins: [react()],
-  base: '/bbdl/', // Set base path for GitHub Pages deployment
+  base: '/bbdl/', // <-- This line is CRUCIAL for the build output to work on GitHub Pages
 })

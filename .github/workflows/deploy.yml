@@ -1,0 +1,62 @@
+# Simple workflow for deploying a Vite React project to GitHub Pages
+name: Deploy to GitHub Pages
+
+on:
+  # Runs on pushes targeting the default branch
+  push:
+    branches: ['main'] # Make sure this is the branch you want to deploy from
+
+  # Allows you to run this workflow manually from the Actions tab
+  workflow_dispatch:
+
+# Sets permissions of the GITHUB_TOKEN to allow deployment to GitHub Pages
+permissions:
+  contents: read
+  pages: write # Needed to write to the gh-pages branch for deployment
+  id-token: write # Needed for OpenID Connect authentication
+
+# Allow only one concurrent deployment
+concurrency:
+  group: 'pages'
+  cancel-in-progress: true
+
+jobs:
+  # Build job
+  build:
+    runs-on: ubuntu-latest # Use the latest version of Ubuntu
+    steps:
+      - name: Checkout code
+        uses: actions/checkout@v4 # Get your repository code
+
+      - name: Setup Node.js
+        uses: actions/setup-node@v4
+        with:
+          node-version: '20' # Use a recent stable Node.js version
+          cache: 'npm' # Cache node_modules for faster subsequent runs
+
+      - name: Install dependencies
+        run: npm ci # 'npm ci' is preferred in CI/CD environments for reliability
+
+      - name: Build project
+        run: npm run build # Run the Vite build command, creates the ./dist folder
+
+      # IMPORTANT: Add this step for SPA routing on GitHub Pages
+      - name: Copy index.html to 404.html
+        run: cp dist/index.html dist/404.html # Copies the entry point for SPA routing workaround
+
+      - name: Upload artifact
+        uses: actions/upload-pages-artifact@v3
+        with:
+          path: './dist' # Upload the contents of the build output directory
+
+  # Deployment job
+  deploy:
+    environment: # Sets up the deployment environment on GitHub Pages
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }} # Gets the deployed URL
+    runs-on: ubuntu-latest # Runs on Ubuntu
+    needs: build # Ensures the build job completes successfully before deploying
+    steps:
+      - name: Deploy to GitHub Pages
+        id: deployment # Assigns an ID to this step for referencing outputs
+        uses: actions/deploy-pages@v4 # Deploys the uploaded artifact to GitHub Pages
