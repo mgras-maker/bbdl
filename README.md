@@ -1,11 +1,15 @@
-# React + Vite
+# BBDL Process App
 
-This template provides a minimal setup to get React working in Vite with HMR and some ESLint rules.
+This application visualizes the BB Design Lab process for different city initiatives:
+- Miasto Piękne (Beautiful City)
+- Miasto Dostępne (Accessible City)
+- Miasto Kreatywne (Creative City)
 
-Currently, two official plugins are available:
+The application uses React with Framer Motion for animations and is built with Vite.
 
-- [@vitejs/plugin-react](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react) uses [Babel](https://babeljs.io/) for Fast Refresh
-- [@vitejs/plugin-react-swc](https://github.com/vitejs/vite-plugin-react/blob/main/packages/plugin-react-swc) uses [SWC](https://swc.rs/) for Fast Refresh
+## Live Demo
+
+The live demo of this application is available at: https://mgras-maker.github.io/bbdl/
 
 ## Expanding the ESLint configuration
 

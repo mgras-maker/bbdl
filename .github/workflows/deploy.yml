@@ -35,7 +35,9 @@ jobs:
           cache: 'npm' # Cache node_modules for faster subsequent runs
 
       - name: Install dependencies
-        run: npm ci # 'npm ci' is preferred in CI/CD environments for reliability
+      # IMPORTANT: Using --force to attempt to resolve peer dependency conflicts.
+      # Consider updating dependencies for a long-term solution (e.g., @react-spring/three or React).
+        run: npm install --force # Attempt to force install despite peer dependency conflicts
 
       - name: Build project
         run: npm run build # Run the Vite build command, creates the ./dist folder
@@ -59,4 +61,4 @@ jobs:
     steps:
       - name: Deploy to GitHub Pages
         id: deployment # Assigns an ID to this step for referencing outputs
-        uses: actions/deploy-pages@v4 # Deploys the uploaded artifact to GitHub Pages
+        uses: actions/deploy-pages@v4 # Deploys the uploaded artifact
